@@ -1,0 +1,79 @@
+﻿@page "/fetchdata"
+@using Reader.Shared
+@inject HttpClient Http
+
+<PageTitle>Feed Reader</PageTitle>
+
+<h1>Feed Reader</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+@if (feeds == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var feed in feeds)
+    {
+        @if (feed.Items == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@feed.Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>@feed.Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in feed.Items)
+                                    {
+                                        <tr>
+                                            <td><a href="@item.Url">@item.Title</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.Description</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    }
+}
+
+
+@code {
+    private Feed[]? feeds;
+
+    protected override async Task OnInitializedAsync()
+    {
+        feeds = await Http.GetFromJsonAsync<Feed[]>("Feeds");
+        if (feeds != null)
+        {
+            for (int x = 0; x < feeds.Length; x++)
+            {
+                feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={feeds[x].Url}");
+                StateHasChanged();
+                //feeds[x] = await Http.GetFromJsonAsync<Feed>($"Feed?url={feeds[x].Url}");
+            }
+        }
+    }
+}

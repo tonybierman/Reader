@@ -1,6 +1,7 @@
 {
   "FeedUrls": [
     "https://moxie.foxnews.com/feedburner/latest.xml",
-    "https://feeds.feedburner.com/breitbart"
+    "https://feeds.feedburner.com/breitbart",
+    "https://citizenfreepress.com/feed/"
   ]
 }

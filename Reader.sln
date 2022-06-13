@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reader.Server", "Reader\Server\Reader.Server.csproj", "{BC5DF348-4AFB-4355-AC03-F8B67573731B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reader.Server", "Reader\Server\Reader.Server.csproj", "{BC5DF348-4AFB-4355-AC03-F8B67573731B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reader.Client", "Reader\Client\Reader.Client.csproj", "{2F1CBE58-9ECF-4BFE-82F1-063863B270A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reader.Client", "Reader\Client\Reader.Client.csproj", "{2F1CBE58-9ECF-4BFE-82F1-063863B270A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reader.Shared", "Reader\Shared\Reader.Shared.csproj", "{F1F36322-D7B5-4D98-A448-D8A292F848DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reader.Shared", "Reader\Shared\Reader.Shared.csproj", "{F1F36322-D7B5-4D98-A448-D8A292F848DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

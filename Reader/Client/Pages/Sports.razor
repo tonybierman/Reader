@@ -14,50 +14,9 @@ else
 {
     @foreach (var feed in feeds)
     {
-        @if (feed.Items == null)
-        {
-            <p><em>Loading...</em></p>
-        }
-        else
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>@feed.Title</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        @*<th>@feed.Description</th>*@
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in feed.Items)
-                                    {
-                                        <tr>
-                                            <td><a target="_blank" href="@item.Url">@item.Title</a></td>
-                                        </tr>
-                                        <tr>
-                                            @*<td>@item.Description</td>*@
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        }
+        <SingleFeed News="feed"/>
     }
 }
-
 
 @code {
     private Feed[]? feeds;

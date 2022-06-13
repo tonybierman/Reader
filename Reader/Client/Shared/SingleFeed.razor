@@ -1,0 +1,45 @@
+﻿@using Reader.Shared
+
+<FluentAccordion>
+        <FluentAccordionItem>
+
+        @if (News == null || News?.Items == null)
+        {
+            <div slot="end">
+                <button>0</button>
+            </div>
+            <span slot="heading">Loading...</span>
+        }
+        else
+        {
+            <div slot="end">
+                <button>@News.Items.Count</button>
+            </div>
+            <span slot="heading">@News.Title</span>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        @*<th>@feed.Description</th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in News.Items)
+                    {
+                        <tr>
+                            <td><a target="_blank" href="@item.Url">@item.Title</a></td>
+                        </tr>
+                        <tr>
+                            @*<td>@item.Description</td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+    </FluentAccordionItem>
+</FluentAccordion>
+
+@code {
+    [Parameter] public Feed? News { get; set; }
+}

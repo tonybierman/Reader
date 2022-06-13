@@ -1,12 +1,11 @@
-﻿@page "/fetchdata"
+﻿@page "/sports"
 @using Reader.Shared
 @inject HttpClient Http
 
-<PageTitle>Feed Reader</PageTitle>
+<PageTitle>Sports Page</PageTitle>
 
-<h1>Feed Reader</h1>
+<h1>Sports Page</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
 @if (feeds == null)
 {
     <p><em>Loading...</em></p>
@@ -43,7 +42,7 @@ else
                                     @foreach (var item in feed.Items)
                                     {
                                         <tr>
-                                            <td><a href="@item.Url">@item.Title</a></td>
+                                            <td><a target="_blank" href="@item.Url">@item.Title</a></td>
                                         </tr>
                                         <tr>
                                             @*<td>@item.Description</td>*@
@@ -65,12 +64,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        feeds = await Http.GetFromJsonAsync<Feed[]>("Feeds");
+        feeds = await Http.GetFromJsonAsync<Feed[]>("Feeds?cat=sports");
         if (feeds != null)
         {
             for (int x = 0; x < feeds.Length; x++)
             {
-                feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={feeds[x].Url}");
+                feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={feeds[x].Url}&length=12");
                 StateHasChanged();
                 //feeds[x] = await Http.GetFromJsonAsync<Feed>($"Feed?url={feeds[x].Url}");
             }

@@ -18,9 +18,9 @@ namespace Reader.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Feed> Get()
+        public IEnumerable<Feed> Get(string cat)
         {
-            string fname = Path.Combine(Environment.CurrentDirectory, "var/feeds.json");
+            string fname = Path.Combine(Environment.CurrentDirectory, $"var/{cat}.json");
             string jsonString = System.IO.File.ReadAllText(fname);
             FeedConfiguration conf = JsonSerializer.Deserialize<FeedConfiguration>(jsonString)!;
             if (conf == null)

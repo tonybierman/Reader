@@ -1,10 +1,10 @@
-﻿@page "/"
+﻿@page "/editorial"
 @using Reader.Shared
 @inject HttpClient Http
 
-<PageTitle>Latest News</PageTitle>
+<PageTitle>Editorial Page</PageTitle>
 
-<h1>Latest News</h1>
+<h1>Editorial Page</h1>
 
 @if (feeds == null)
 {
@@ -64,7 +64,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        feeds = await Http.GetFromJsonAsync<Feed[]>("Feeds?cat=news");
+        feeds = await Http.GetFromJsonAsync<Feed[]>("Feeds?cat=editorial");
         if (feeds != null)
         {
             for (int x = 0; x < feeds.Length; x++)

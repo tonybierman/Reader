@@ -1,0 +1,27 @@
+﻿@if (isLoaded)
+{
+    @ChildContent
+}
+else
+{
+        <div style="position:absolute; top:30vh; width:100%; text-align:center">
+            <h1>News Reader</h1>
+            <div style="display:flex; gap:10px; justify-content:center; align-items:center">
+                <div class="spinner-border" role="status"></div>
+                loading...
+            </div>
+        </div>
+}
+
+@code {
+    bool isLoaded;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //await Task.Delay(4000); // TODO actual initialization job
+        isLoaded = true;
+    }
+}

@@ -24,27 +24,31 @@ namespace Reader.Server.Controllers
         }
 
         [HttpGet]
-        public Feed Get(string url)
+        public Feed Get(string url, string length)
         {
-            Task<Feed> f = LoadFeed(url);
+            int l = Convert.ToInt32(length);
+            if (l == 0)
+                l = 5;
+
+            Task<Feed> f = LoadFeed(url, l);
 
             return f.Result;
         }
 
-        private async Task<Feed> LoadFeed(string url)
+        private async Task<Feed> LoadFeed(string url, int length)
         {
             FeedService svc = new FeedService(new HttpClient(), _logger);
-
             SyndicationFeed syndicationFeed = await svc.GetSyndicationFeed(url);
 
             if (syndicationFeed != null)
             {
+
                 Feed feed = new Feed
                 {
                     Id = Guid.NewGuid(),
                     Description = syndicationFeed.Description?.Text,
                     ImageUrl = syndicationFeed.ImageUrl?.AbsoluteUri,
-                    Items = syndicationFeed.Items.Take(8).Select(i => new FeedItem
+                    Items = syndicationFeed.Items.Take(length).Select(i => new FeedItem
                     {
                         Title = i.Title.Text,
                         Description = i.Summary.Text,

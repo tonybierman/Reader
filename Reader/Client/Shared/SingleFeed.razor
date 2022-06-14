@@ -3,7 +3,7 @@
 <FluentAccordion>
         <FluentAccordionItem Expanded="true">
 
-        @if (News == null)
+        @if (News == null || News?.Items == null)
         {
             <div slot="end">
                 <button>0</button>
@@ -13,7 +13,7 @@
                 loading...
             </span>
         }
-        else if (News?.Items == null || News.Id == Guid.Empty)
+        else if (News?.Items?.Count < 1)
         {
             <div slot="end">
                 <button>0</button>

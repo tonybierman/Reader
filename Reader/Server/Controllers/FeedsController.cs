@@ -22,16 +22,19 @@ namespace Reader.Server.Controllers
         {
             string fname = Path.Combine(Environment.CurrentDirectory, $"var/{cat}.json");
             string jsonString = System.IO.File.ReadAllText(fname);
-            FeedConfiguration conf = JsonSerializer.Deserialize<FeedConfiguration>(jsonString)!;
+            FeedConfiguration? conf = JsonSerializer.Deserialize<FeedConfiguration>(jsonString)!;
             if (conf == null)
                 throw new NullReferenceException();
 
             List<Feed> feeds = new List<Feed>();
-            foreach (string url in conf.FeedUrls)
+            if (conf.FeedUrls != null)
             {
-                Feed f = new Feed();
-                f.Url = url;
-                feeds.Add(f);
+                foreach (string url in conf.FeedUrls)
+                {
+                    Feed f = new Feed();
+                    f.Url = url;
+                    feeds.Add(f);
+                }
             }
 
             return feeds.ToArray();

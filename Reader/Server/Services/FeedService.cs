@@ -17,8 +17,7 @@ namespace Reader.Server.Services
     public class FeedService
     {
         readonly HttpClient _client;
-        readonly ILogger<FeedService> _logger;
-        private ILogger<SingleFeedController> logger;
+        readonly ILogger<object>? _logger;
 
         //readonly ILocalStorage _localStorage;
 
@@ -27,9 +26,9 @@ namespace Reader.Server.Services
             _client = httpClient;
         }
 
-        public FeedService(HttpClient httpClient, ILogger<SingleFeedController> logger) : this(httpClient)
+        public FeedService(HttpClient httpClient, ILogger<object> logger) : this(httpClient)
         {
-            this.logger = logger;
+            _logger = logger;
         }
 
         //public FeedService(HttpClient httpClient, ILocalStorage localStorage, ILogger<FeedService> logger)
@@ -51,12 +50,12 @@ namespace Reader.Server.Services
         //    var feed = feeds.SingleOrDefault(f => f.Id.ToString() == feedId);
         //    return feed;
         //}
-        public async Task<Feed> GetFeedMetadata(string feedUrl)
+        public async Task<Feed?> GetFeedMetadata(string feedUrl)
         {
             try
             {
-                Feed feed = null;
-                SyndicationFeed syndicationFeed = await GetSyndicationFeed(feedUrl);
+                Feed? feed = null;
+                SyndicationFeed? syndicationFeed = await GetSyndicationFeed(feedUrl);
                 if (syndicationFeed != null)
                 {
                     feed = new Feed
@@ -80,7 +79,7 @@ namespace Reader.Server.Services
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "Error Parsing Feed", null);
+                _logger?.LogCritical(ex, "Error Parsing Feed");
                 throw;
             }
         }
@@ -147,7 +146,7 @@ namespace Reader.Server.Services
         //    return null;
         //}
 
-        public async Task<SyndicationFeed> GetSyndicationFeed(String url)
+        public async Task<SyndicationFeed?> GetSyndicationFeed(String url)
         {
             var task = Task.Factory.StartNew(() =>
             {

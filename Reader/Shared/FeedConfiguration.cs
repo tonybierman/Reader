@@ -2,6 +2,6 @@
 {
     public class FeedConfiguration
     {
-        public string[] FeedUrls { get; set; }
+        public string[]? FeedUrls { get; set; }
     }
 }

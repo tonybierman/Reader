@@ -44,7 +44,7 @@ namespace Reader.Server.Controllers
         {
             Feed feed = new Feed() { Id = Guid.Empty };
             FeedService svc = new FeedService(new HttpClient(), _logger);
-            SyndicationFeed syndicationFeed = await svc.GetSyndicationFeed(url);
+            SyndicationFeed? syndicationFeed = await svc.GetSyndicationFeed(url);
 
             if (syndicationFeed != null)
             {

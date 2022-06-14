@@ -26,7 +26,11 @@ else
         <div class="single-feed">
             @if (feed == null)
             {
-                <div>Error loading feed</div>
+                <div>Loading...</div>
+            }
+            else if (feed.Id == Guid.Empty)
+            {
+                
             }
             else
             {

@@ -1,7 +1,7 @@
 ﻿@using Reader.Shared
 
 <FluentAccordion>
-        <FluentAccordionItem>
+        <FluentAccordionItem Expanded="true">
 
         @if (News == null || News?.Items == null)
         {
@@ -30,7 +30,7 @@
                     @foreach (var item in News.Items)
                     {
                         <tr>
-                            <td><a target="_blank" href="@item.Url">@item.Title</a></td>
+                            <td><FluentBadge Appearance="Appearance.Neutral">@item.PublishedShort</FluentBadge>&nbsp;<a target="_blank" href="@item.Url">@item.Title</a></td>
                         </tr>
                         <tr>
                             @*<td>@item.Description</td>*@

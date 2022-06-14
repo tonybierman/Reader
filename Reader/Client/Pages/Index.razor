@@ -3,6 +3,11 @@
 @using Reader.Shared
 @inject HttpClient Http
 
+<style>
+    .single-feed {
+        margin:5px;
+    }
+</style>
 <PageTitle>@m_title</PageTitle>
 
 <h1>@m_title</h1>
@@ -18,7 +23,9 @@ else
 {
     @foreach (var feed in m_feeds)
     {
-        <SingleFeed News="feed"/>
+        <div class="single-feed">
+            <SingleFeed News="feed"/>
+        </div>
     }
 }
 
@@ -52,7 +59,7 @@ else
         {
             for (int x = 0; x < m_feeds.Length; x++)
             {
-                m_feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={m_feeds[x].Url}&length=8");
+                m_feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={m_feeds[x].Url}&length=18");
                 StateHasChanged();
             }
         }

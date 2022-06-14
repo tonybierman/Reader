@@ -48,11 +48,12 @@ namespace Reader.Server.Controllers
                     Id = Guid.NewGuid(),
                     Description = syndicationFeed.Description?.Text,
                     ImageUrl = syndicationFeed.ImageUrl?.AbsoluteUri,
-                    Items = syndicationFeed.Items.Take(length).Select(i => new FeedItem
+                    Items = syndicationFeed.Items.OrderByDescending(a => a.PublishDate).Take(length).Select(i => new FeedItem
                     {
                         Title = i.Title.Text,
                         Description = i.Summary.Text,
-                        Url = i.Links[0].Uri.AbsoluteUri
+                        Url = i.Links[0].Uri.AbsoluteUri,
+                        Published = i.PublishDate.LocalDateTime
                     }).ToList(),
                     Url = url,
                     Title = syndicationFeed.Title?.Text,

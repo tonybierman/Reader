@@ -3,7 +3,7 @@
 <FluentAccordion>
         <FluentAccordionItem Expanded="true">
 
-        @if (News == null || News?.Items == null)
+        @if (News == null)
         {
             <div slot="end">
                 <button>0</button>
@@ -13,12 +13,21 @@
                 loading...
             </span>
         }
+        else if (News?.Items == null || News.Id == Guid.Empty)
+        {
+            <div slot="end">
+                <button>0</button>
+            </div>
+            <span slot="heading" style="display:flex; gap:10px; justify-content:center; align-items:center">
+               Failed to load items from feed
+            </span>
+        }
         else
         {
             <div slot="end">
                 <button>@News.Items.Count</button>
             </div>
-            <span slot="heading">@News.Title</span>
+            <span slot="heading"><h5>@News.Title</h5></span>
 
             <table class="table">
                 <thead>
@@ -30,7 +39,13 @@
                     @foreach (var item in News.Items)
                     {
                         <tr>
-                            <td><FluentBadge Appearance="Appearance.Neutral">@item.PublishedShort</FluentBadge>&nbsp;<a target="_blank" href="@item.Url">@item.Title</a></td>
+                            <td>
+                                <a target="_blank" title="Read at @News.Title" href="@item.Url"><span class="oi oi-external-link"/></a>
+                                &nbsp;
+                                <FluentBadge Appearance="Appearance.Neutral">@item.PublishedShort</FluentBadge>
+                                &nbsp;
+                                @item.Title
+                            </td>
                         </tr>
                         <tr>
                             @*<td>@item.Description</td>*@

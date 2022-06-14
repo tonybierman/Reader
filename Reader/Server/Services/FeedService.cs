@@ -131,20 +131,39 @@ namespace Reader.Server.Services
         //    }).ConfigureAwait(false);
         //}
 
-        public async Task<SyndicationFeed> GetSyndicationFeed(string feedUrl)
-        {
-            try
-            {
-                XmlReader reader = XmlReader.Create(feedUrl);
-                var syndicationFeed = SyndicationFeed.Load(reader);
-                return syndicationFeed;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message, new[] { feedUrl });
-            }
+        //public async Task<SyndicationFeed> GetSyndicationFeed(string feedUrl)
+        //{
+        //    try
+        //    {
+        //        XmlReader reader = XmlReader.Create(feedUrl);
+        //        var syndicationFeed = SyndicationFeed.Load(reader);
+        //        return syndicationFeed;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, ex.Message, new[] { feedUrl });
+        //    }
 
-            return null;
+        //    return null;
+        //}
+
+        public async Task<SyndicationFeed> GetSyndicationFeed(String url)
+        {
+            var task = Task.Factory.StartNew(() =>
+            {
+                XmlReader reader = XmlReader.Create(url);
+                return SyndicationFeed.Load(reader);
+            });
+
+            int timeout = 5000;
+            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+            {
+                return await task;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //private string GetFeedContent(string rawContent)

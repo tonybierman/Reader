@@ -24,26 +24,31 @@ namespace Reader.Server.Controllers
         }
 
         [HttpGet]
-        public Feed Get(string url, string length)
+        public async Task<Feed?> Get(string url, string length)
         {
+            int timeout = 5000;
             int l = Convert.ToInt32(length);
             if (l == 0)
                 l = 5;
 
-            Task<Feed> f = LoadFeed(url, l);
+            var task = LoadFeed(url, l);
+            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+            {
+                return task.Result;
+            }
 
-            return f.Result;
+            return null;
         }
 
         private async Task<Feed> LoadFeed(string url, int length)
         {
+            Feed feed = new Feed() { Id = Guid.Empty };
             FeedService svc = new FeedService(new HttpClient(), _logger);
             SyndicationFeed syndicationFeed = await svc.GetSyndicationFeed(url);
 
             if (syndicationFeed != null)
             {
-
-                Feed feed = new Feed
+                feed = new Feed
                 {
                     Id = Guid.NewGuid(),
                     Description = syndicationFeed.Description?.Text,
@@ -60,11 +65,9 @@ namespace Reader.Server.Controllers
                     WebsiteUrl = syndicationFeed.Links.SingleOrDefault(l => l.RelationshipType == "alternate")?.Uri.AbsoluteUri,
                     LastUpdate = syndicationFeed.LastUpdatedTime.DateTime
                 };
-
-                return feed;
             }
-            else
-                return null;
+
+            return feed;
         }
     }
 }

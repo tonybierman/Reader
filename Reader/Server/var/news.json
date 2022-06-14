@@ -1,7 +1,11 @@
 {
   "FeedUrls": [
+    "https://www.newsmax.com/rss/Newsfront/16/",
     "https://moxie.foxnews.com/feedburner/latest.xml",
     "https://feeds.feedburner.com/breitbart",
-    "https://citizenfreepress.com/feed/"
+    "https://citizenfreepress.com/feed/",
+    "https://theintercept.com/feed/?lang=en",
+    "https://www.washingtontimes.com/rss/headlines/news/national/",
+    "https://nypost.com/news/feed/"
   ]
 }

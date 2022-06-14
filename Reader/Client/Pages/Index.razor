@@ -24,7 +24,14 @@ else
     @foreach (var feed in m_feeds)
     {
         <div class="single-feed">
-            <SingleFeed News="feed"/>
+            @if (feed == null)
+            {
+                <div>Error loading feed</div>
+            }
+            else
+            {
+                <SingleFeed News="feed"/>
+            }
         </div>
     }
 }
@@ -59,8 +66,18 @@ else
         {
             for (int x = 0; x < m_feeds.Length; x++)
             {
-                m_feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={m_feeds[x].Url}&length=18");
-                StateHasChanged();
+                try
+                {
+                    m_feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={m_feeds[x].Url}&length=18");
+                }
+                catch
+                {
+                    m_feeds[x] = new Feed() { Id = Guid.Empty }; 
+                }
+                finally
+                {
+                    StateHasChanged();
+                }
             }
         }
     }

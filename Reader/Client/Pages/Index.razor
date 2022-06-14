@@ -1,36 +1,59 @@
 ﻿@page "/"
+@page "/news/{Slug}"
 @using Reader.Shared
 @inject HttpClient Http
 
-<PageTitle>Latest News</PageTitle>
+<PageTitle>@m_title</PageTitle>
 
-<h1>Latest News</h1>
+<h1>@m_title</h1>
 
-@if (feeds == null)
+@if (m_feeds == null)
 {
-    <p><em>Loading...</em></p>
+    <div style="display:flex; gap:10px; justify-content:center; align-items:center">
+                <div class="spinner-border" role="status"></div>
+                loading...
+    </div>
 }
 else
 {
-    @foreach (var feed in feeds)
+    @foreach (var feed in m_feeds)
     {
         <SingleFeed News="feed"/>
     }
 }
 
 @code {
-    private Feed[]? feeds;
+    [Parameter] public string? Slug { get; set; }
+    private string m_title;
+    private Feed[]? m_feeds;
+    Dictionary<string, string> m_titles = new Dictionary<string, string>();
 
     protected override async Task OnInitializedAsync()
     {
-        feeds = await Http.GetFromJsonAsync<Feed[]>("Feeds?cat=news");
-        if (feeds != null)
+        m_titles.Add("news", "Latest News");
+        m_titles.Add("editorial", "Editorial Page");
+        m_titles.Add("sports", "Sports Page");
+    }
+
+    protected override async void OnParametersSet()
+    {
+        m_feeds = null;
+        Slug = Slug ?? "news";
+
+        if (m_titles.ContainsKey(Slug))
+            m_title = m_titles[Slug];
+        else
+            m_title = m_titles["news"];
+
+        StateHasChanged();
+
+        m_feeds = await Http.GetFromJsonAsync<Feed[]>($"Feeds?cat={Slug}");
+        if (m_feeds != null)
         {
-            for (int x = 0; x < feeds.Length; x++)
+            for (int x = 0; x < m_feeds.Length; x++)
             {
-                feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={feeds[x].Url}&length=8");
+                m_feeds[x] = await Http.GetFromJsonAsync<Feed>($"SingleFeed?url={m_feeds[x].Url}&length=8");
                 StateHasChanged();
-                //feeds[x] = await Http.GetFromJsonAsync<Feed>($"Feed?url={feeds[x].Url}");
             }
         }
     }

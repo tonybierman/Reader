@@ -14,7 +14,7 @@ namespace Reader.Client.Shared
         [Inject]
         private BaseLayerLuminance BaseLayerLuminance { get; set; } = default!;
 
-        ElementReference? container;
+        ElementReference container;
 
         ErrorBoundary? errorBoundary;
 

@@ -19,6 +19,12 @@
                 loading...
     </div>
 }
+@*else if (m_feeds.Length == 0)
+{
+    <div style="display:flex; gap:10px; justify-content:center; align-items:center">
+        Unavaiable
+    </div>
+}*@
 else
 {
     @foreach (var feed in m_feeds)
@@ -51,6 +57,12 @@ else
         m_titles.Add("news", "Latest Headlines");
         m_titles.Add("editorial", "Editorials");
         m_titles.Add("sports", "Sports");
+        m_titles.Add("culture", "Cultural News");
+        m_titles.Add("world", "World News");
+        m_titles.Add("politics", "Politics");
+        m_titles.Add("tech", "Tech News");
+        m_titles.Add("business", "Business News");
+        m_titles.Add("finance", "Financial News");
     }
 
     protected override async void OnParametersSet()

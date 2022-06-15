@@ -20,20 +20,30 @@ namespace Reader.Server.Controllers
         [HttpGet]
         public IEnumerable<Feed> Get(string cat)
         {
-            string fname = Path.Combine(Environment.CurrentDirectory, $"var/{cat}.json");
-            string jsonString = System.IO.File.ReadAllText(fname);
-            FeedConfiguration? conf = JsonSerializer.Deserialize<FeedConfiguration>(jsonString)!;
-            if (conf == null)
-                throw new NullReferenceException();
+
+            List<FeedConfiguration?> confList = new List<FeedConfiguration?>();
+
+            string[] fileEntries = Directory.GetFiles($"var/{cat}", "*.json");
+            foreach (var fname in fileEntries)
+            {
+                string jsonString = System.IO.File.ReadAllText(fname);
+                FeedConfiguration? gp = JsonSerializer.Deserialize<FeedConfiguration>(jsonString)!;
+                if (gp == null)
+                    throw new NullReferenceException();
+                confList.Add(gp);
+            }
 
             List<Feed> feeds = new List<Feed>();
-            if (conf.FeedUrls != null)
+            foreach (var conf in confList)
             {
-                foreach (string url in conf.FeedUrls)
+                if (conf?.FeedUrls != null)
                 {
-                    Feed f = new Feed();
-                    f.Url = url;
-                    feeds.Add(f);
+                    foreach (string url in conf.FeedUrls)
+                    {
+                        Feed f = new Feed();
+                        f.Url = url;
+                        feeds.Add(f);
+                    }
                 }
             }
 

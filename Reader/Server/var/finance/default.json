@@ -1,0 +1,7 @@
+{
+  "FeedUrls": [
+    "http://feeds.marketwatch.com/marketwatch/topstories/",
+    "http://feeds.marketwatch.com/marketwatch/realtimeheadlines/",
+    "http://feeds.marketwatch.com/marketwatch/marketpulse/"
+  ]
+}

@@ -14,7 +14,7 @@
 
 @if (m_feeds == null)
 {
-    <div style="display:flex; gap:10px; justify-content:center; align-items:center">
+    <div style="display:flex; gap:10px; justify-content:center; align-items:center; margin-bottom:10px;">
                 <div class="spinner-border" role="status"></div>
                 loading...
     </div>
@@ -88,7 +88,11 @@ else
                 }
                 catch
                 {
-                    m_feeds[x] = new Feed() { Id = Guid.Empty }; 
+                    try
+                    {
+                        m_feeds[x] = new Feed() { Id = Guid.Empty };
+                    }
+                    catch { }
                 }
                 finally
                 {

@@ -1,62 +1,65 @@
 ﻿@using Reader.Shared
 
-<FluentAccordion>
-        <FluentAccordionItem Expanded="true">
+<BaseLayerLuminance Value="(float?)0.15">
+    <FluentCard neutral-palette-source="#CABA8C" BackReference="@context">
+        <FluentAccordion>
+            <FluentAccordionItem Expanded="true">
+                @if (News == null || News?.Items == null)
+                {
+                    <div slot="end">
+                        <button>0</button>
+                    </div>
+                    <span slot="heading" style="display:flex; gap:10px; justify-content:center; align-items:center">
+                        <div class="spinner-border" role="status"></div>
+                        loading...
+                    </span>
+                }
+                else if (News?.Items?.Count < 1)
+                {
+                    <div slot="end">
+                        <button>0</button>
+                    </div>
+                    <span slot="heading" style="display:flex; gap:10px; justify-content:center; align-items:center">
+                       Failed to load items from feed
+                    </span>
+                }
+                else
+                {
+                    <div slot="end">
+                        <button>@News.Items.Count</button>
+                    </div>
+                    <span slot="heading"><h5>@News.Title</h5></span>
 
-        @if (News == null || News?.Items == null)
-        {
-            <div slot="end">
-                <button>0</button>
-            </div>
-            <span slot="heading" style="display:flex; gap:10px; justify-content:center; align-items:center">
-                <div class="spinner-border" role="status"></div>
-                loading...
-            </span>
-        }
-        else if (News?.Items?.Count < 1)
-        {
-            <div slot="end">
-                <button>0</button>
-            </div>
-            <span slot="heading" style="display:flex; gap:10px; justify-content:center; align-items:center">
-               Failed to load items from feed
-            </span>
-        }
-        else
-        {
-            <div slot="end">
-                <button>@News.Items.Count</button>
-            </div>
-            <span slot="heading"><h5>@News.Title</h5></span>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                @*<th>@feed.Description</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in News.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        <a target="_blank" title="Read at @News.Title" href="@item.Url"><span class="oi oi-external-link"/></a>
+                                        &nbsp;
+                                        <FluentBadge Appearance="Appearance.Neutral">@item.PublishedShort</FluentBadge>
+                                        &nbsp;
+                                        @item.Title
+                                    </td>
+                                </tr>
+                                <tr>
+                                    @*<td>@item.Description</td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        @*<th>@feed.Description</th>*@
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in News.Items)
-                    {
-                        <tr>
-                            <td>
-                                <a target="_blank" title="Read at @News.Title" href="@item.Url"><span class="oi oi-external-link"/></a>
-                                &nbsp;
-                                <FluentBadge Appearance="Appearance.Neutral">@item.PublishedShort</FluentBadge>
-                                &nbsp;
-                                @item.Title
-                            </td>
-                        </tr>
-                        <tr>
-                            @*<td>@item.Description</td>*@
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-        }
-    </FluentAccordionItem>
-</FluentAccordion>
+                }
+            </FluentAccordionItem>
+        </FluentAccordion>
+    </FluentCard>
+</BaseLayerLuminance>
 
 @code {
     [Parameter] public Feed? News { get; set; }

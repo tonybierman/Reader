@@ -1,6 +1,7 @@
 {
   "FeedUrls": [
     "https://moxie.foxnews.com/feedburner/sports.xml",
+    "https://www.outkick.com/feed/",
     "https://nypost.com/sports/feed/"
   ]
 }

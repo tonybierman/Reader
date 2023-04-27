@@ -1,9 +1,9 @@
 {
   "FeedUrls": [
-    "https://moxie.foxnews.com/feedburner/latest.xml",
     "https://feeds.feedburner.com/breitbart",
     "https://justthenews.com/rss.xml",
     "https://www.washingtontimes.com/rss/headlines/news/national/",
-    "https://nypost.com/news/feed/"
+    "https://nypost.com/news/feed/",
+    "https://www.newsnationnow.com/feed/"
   ]
 }

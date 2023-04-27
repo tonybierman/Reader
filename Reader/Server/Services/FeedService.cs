@@ -150,7 +150,9 @@ namespace Reader.Server.Services
         {
             var task = Task.Factory.StartNew(() =>
             {
-                XmlReader reader = XmlReader.Create(url);
+                XmlReaderSettings settings = new XmlReaderSettings();
+                settings.ProhibitDtd = false;
+                XmlReader reader = XmlReader.Create(url, settings);
                 return SyndicationFeed.Load(reader);
             });
 

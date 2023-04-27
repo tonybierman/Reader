@@ -20,6 +20,11 @@ namespace Reader.Server.Controllers
         [HttpGet]
         public IEnumerable<Feed> Get(string cat)
         {
+            var options = new JsonSerializerOptions
+            {
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                AllowTrailingCommas = true,
+            };
 
             List<FeedConfiguration?> confList = new List<FeedConfiguration?>();
 
@@ -27,7 +32,7 @@ namespace Reader.Server.Controllers
             foreach (var fname in fileEntries)
             {
                 string jsonString = System.IO.File.ReadAllText(fname);
-                FeedConfiguration? gp = JsonSerializer.Deserialize<FeedConfiguration>(jsonString)!;
+                FeedConfiguration? gp = JsonSerializer.Deserialize<FeedConfiguration>(jsonString, options)!;
                 if (gp == null)
                     throw new NullReferenceException();
                 confList.Add(gp);

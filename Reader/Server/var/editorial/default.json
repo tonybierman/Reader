@@ -1,10 +1,8 @@
 {
   "FeedUrls": [
-    "https://moxie.foxnews.com/feedburner/opinion.xml",
     "https://thefederalist.com/feed/",
     "https://jonathanturley.org/feed/",
     "https://nypost.com/opinion/feed/",
-    "https://www.washingtontimes.com/rss/headlines/opinion/",
-    "https://amgreatness.com/feed/"
+    "https://www.washingtontimes.com/rss/headlines/opinion/"
   ]
 }
